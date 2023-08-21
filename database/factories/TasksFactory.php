@@ -5,6 +5,8 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
+use App\Models\{Category, User};
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Tasks>
  */
@@ -18,11 +20,18 @@ class TasksFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'title' => fake()->realText(100), // then connect to our database when done (env)
+            'description' => fake()->paragraph(),
+            'due_date' => dateTimeBetween("now", "+ 5 days"), // validation: above today
+            'status' => array_rand(["Not Started", "In Progress", "Completed"]),
+            'task_category_id' => function () {
+                
+                return Category::factory()->create()->id;
+            },
+            "creator_id" => function () {
+                
+                return User::factory()->create()->id;
+            }
         ];
     }
 }

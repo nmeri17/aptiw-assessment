@@ -3,23 +3,57 @@ scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date
 
 "Indicates what fields are available at the top level of a query operation."
 type Query {
-    "Find a single user by an identifying attribute."
-    user(
-      "Search by primary key."
-      id: ID @eq @rules(apply: ["prohibits:email", "required_without:email"])
+  "Find a single user by an identifying attribute."
+  user(
+    "Search by primary key."
+    id: ID @eq @rules(apply: ["prohibits:email", "required_without:email"])
 
-      "Search by email address."
-      email: String @eq @rules(apply: ["prohibits:id", "required_without:id", "email"])
-    ): User @find
+    "Search by email address."
+    email: String @eq @rules(apply: ["prohibits:id", "required_without:id", "email"])
+  ): User @find
 
-    "List multiple users."
-    users(
-      "Filters by name. Accepts SQL LIKE wildcards `%` and `_`."
-      name: String @where(operator: "like")
-    ): [User!]! @paginate(defaultCount: 10)
+  "List multiple users."
+  users(
+    "Filters by name. Accepts SQL LIKE wildcards `%` and `_`."
+    name: String @where(operator: "like")
+  ): [User!]! @paginate(defaultCount: 10)
+
+  "me: User @auth(guard: "api")"
+  me: User @auth
+
+  "queries for tasks and cats"
+  task(
+    id: ID! @eq
+  ): Task @find
+
+  tasks (
+    name: String @where(operator: "like")
+  ): [Tasks!]! @paginate(defaultCount: 10)
+
+  task_categories: TaskCategory @all
 }
 
-"Account of a person who utilizes this application."
+type Mutation {
+  createUser(
+    name: String!
+    email: String! @rules(apply: ["email", "unique:users"])
+    password: String! @bcrypt @rules(apply: ["min:6"])
+  ): User @create
+
+  "Exclamation marks in arguments make the value in payload required"
+  createTasks(title: String!, description: String!, due_date: DateTime!, category_id: Int!, status: String!): Tasks 
+    "resolved from path app/graphql/mutations"
+    @field(resolver: "TasksMutator@create")
+    "@middleware(checks: ["auth:api"])"
+    @middleware(checks: ["auth"])
+
+  updateTask(id: ID!, title: String, description: String, due_date: DateTime, category_id: Int, status: String): Tasks @update
+    @middleware(checks: ["auth"])
+
+  deleteTask(id: ID! @whereKey): Tasks @delete
+    @middleware(checks: ["auth"])
+}
+
 type User {
     "Unique primary key."
     id: ID!
@@ -38,4 +72,36 @@ type User {
 
     "When the account was last updated."
     updated_at: DateTime!
+
+    tasks: [Tasks] @hasMany
+}
+
+type Tasks {
+    "Unique primary key."
+    id: ID!
+
+    "exclamation mark in type makes field non-nullable"
+    title: String!
+
+    description: String!
+
+    due_date: DateTime!
+
+    status: String!
+
+    category: TaskCategory! @belongsTo
+
+    creator: User! @belongsTo
+
+    created_at: DateTime!
+
+    updated_at: DateTime!
+}
+
+type TaskCategory {
+    "Unique primary key."
+    id: ID!
+
+    "exclamation mark in type makes field non-nullable"
+    name: String!
 }

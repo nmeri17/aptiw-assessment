@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-use App\Models\Category;
+use App\Models\{Category, User};
 
 return new class extends Migration
 {
@@ -25,6 +25,8 @@ return new class extends Migration
             $table->enum("status", ["Not Started", "In Progress", "Completed"]);
 
             $table->foreignIdFor(Category::class);
+
+            $table->foreignIdFor(User::class, "creator_id");
 
             $table->timestamps();
         });

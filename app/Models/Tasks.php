@@ -13,4 +13,9 @@ class Tasks extends Model
 
         return $this->belongsTo(Category::class);
     }
+
+    public function creator () {
+
+        return $this->belongsTo(User::class, "creator_id");
+    }
 }
