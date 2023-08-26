@@ -19,12 +19,16 @@ class TasksFactory extends Factory
      */
     public function definition(): array
     {
+        $allStatuses = ["Not Started", "In Progress", "Completed"];
+
+        $statusKey = array_rand($allStatuses);
+
         return [
             'title' => fake()->realText(100), // then connect to our database when done (env)
             'description' => fake()->paragraph(),
             'due_date' => fake()->dateTimeBetween("now", "+ 5 days"), // validation: above today
-            'status' => array_rand(["Not Started", "In Progress", "Completed"]),
-            'task_category_id' => function () {
+            'status' => $allStatuses[$statusKey],
+            'category_id' => function () {
                 
                 return Category::factory()->create()->id;
             },

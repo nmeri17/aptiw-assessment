@@ -18,7 +18,7 @@ type Query {
     name: String @where(operator: "like")
   ): [User!]! @paginate(defaultCount: 10)
 
-  "me: User @auth(guard: "api")"
+  "me: User @auth(guard: \"api\")"
   me: User @auth
 
   "queries for tasks and cats"
@@ -37,21 +37,15 @@ type Mutation {
   createUser(
     name: String!
     email: String! @rules(apply: ["email", "unique:users"])
-    password: String! @bcrypt @rules(apply: ["min:6"])
+    password: String! @rules(apply: ["min:6"])
   ): User @create
 
-  "Exclamation marks in arguments make the value in payload required"
-  createTasks(title: String!, description: String!, due_date: DateTime!, category_id: Int!, status: String!): Tasks 
-    "resolved from path app/graphql/mutations"
-    @field(resolver: "TasksMutator@create")
-    "@middleware(checks: ["auth:api"])"
-    @middleware(checks: ["auth"])
+  "Exclamation marks in arguments make the value in payload required. resolved from path app/graphql/mutations. @middleware(checks: [\"auth:api\"])"
+  createTasks(title: String!, description: String!, due_date: DateTime!, category_id: Int!, status: String!): Tasks @field(resolver: "TasksMutator@create")
 
   updateTask(id: ID!, title: String, description: String, due_date: DateTime, category_id: Int, status: String): Tasks @update
-    @middleware(checks: ["auth"])
 
   deleteTask(id: ID! @whereKey): Tasks @delete
-    @middleware(checks: ["auth"])
 }
 
 type User {
