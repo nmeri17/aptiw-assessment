@@ -22,7 +22,7 @@ class TasksFactory extends Factory
         return [
             'title' => fake()->realText(100), // then connect to our database when done (env)
             'description' => fake()->paragraph(),
-            'due_date' => dateTimeBetween("now", "+ 5 days"), // validation: above today
+            'due_date' => fake()->dateTimeBetween("now", "+ 5 days"), // validation: above today
             'status' => array_rand(["Not Started", "In Progress", "Completed"]),
             'task_category_id' => function () {
                 
