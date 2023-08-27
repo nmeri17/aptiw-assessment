@@ -1,9 +1,6 @@
 <script setup>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
-import { Head } from "@inertiajs/inertia-vue3";
-import BreezeButton from "@/Components/Button.vue";
-import { Link } from "@inertiajs/inertia-vue3";
-import { useForm } from "@inertiajs/inertia-vue3";
+import BreezeAuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { Head, Link, useForm } from "@inertiajs/vue3";
 
 const props = defineProps({
     task: {

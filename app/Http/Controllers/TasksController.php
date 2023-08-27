@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tasks;
 use App\Http\Requests\StoreTasksRequest;
 use App\Http\Requests\UpdateTasksRequest;
+use Inertia\Inertia;
 
 class TasksController extends Controller
 {
@@ -13,7 +14,9 @@ class TasksController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Tasks/Index', [
+          //
+        ]);
     }
 
     /**
@@ -21,7 +24,9 @@ class TasksController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Tasks/Create', [
+          //
+        ]);
     }
 
     /**
@@ -45,7 +50,9 @@ class TasksController extends Controller
      */
     public function edit(Tasks $tasks)
     {
-        //
+        return Inertia::render('Tasks/Edit', [
+          //
+        ]);
     }
 
     /**

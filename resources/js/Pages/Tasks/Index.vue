@@ -1,24 +1,23 @@
 <script setup>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
-import { Head } from "@inertiajs/inertia-vue3";
-import BreezeButton from "@/Components/Button.vue";
-import { Link } from "@inertiajs/inertia-vue3";
-import { Inertia } from "@inertiajs/inertia";
-import { useForm } from '@inertiajs/inertia-vue3'
+import BreezeAuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import { Head, Link, useForm } from "@inertiajs/vue3";
 
 const props = defineProps({
 		tasks: {
 				type: Object,
 				default: () => ({}),
-		},
+		}
 });
-const form = useForm();
+const form = useForm({});
 
 function destroy(id) {
 		if (confirm("Are you sure you want to Delete")) {
 				form.delete(route('tasks.destroy', id));
 		}
 }
+
+const categories = [];
 </script>
 
 <template>
@@ -35,19 +34,19 @@ function destroy(id) {
 				<div class="py-12">
 						<div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
 								<div
-										v-if="$page.props.flash.message"
+										v-if="$page.flash && $page.flash.message"
 										class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
 										role="alert"
-								>
+								> <!-- this is added by inertia through providers/appServiceProvider -->
 										<span class="font-medium">
-												{{ $page.props.flash.message }}
+												{{ $page.flash.message }}
 										</span>
 								</div>
 								<div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
 										<div class="p-6 bg-white border-b border-gray-200">
 											 <div class="mb-2">
 														<Link :href="route('tasks.create')">
-																<BreezeButton>Add Task</BreezeButton></Link
+																<PrimaryButton>Add Task</PrimaryButton></Link
 														>
 												</div>
 												 <div
@@ -128,12 +127,12 @@ function destroy(id) {
 																						>
 																				</td>
 																				<td class="px-6 py-4">
-																						<BreezeButton
+																						<PrimaryButton
 																								class="bg-red-700"
 																								@click="destroy(task.id)"
 																						>
 																								Delete
-																						</BreezeButton>
+																						</PrimaryButton>
 																				</td>
 																		</tr>
 																</tbody>

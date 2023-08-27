@@ -1,6 +1,6 @@
 <script setup>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
-import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
+import BreezeAuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { Head, Link, useForm } from "@inertiajs/vue3";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
@@ -14,7 +14,6 @@ const props = defineProps({
     },
 });
 
-// look for a way to set a `data` property (categories) on this component
 const form = useForm({
     title: '',
     due_date: '',
@@ -26,6 +25,8 @@ const form = useForm({
 const submit = () => {
     form.post(route("tasks.store"));
 };
+
+const categories = [];
 </script>
 
 <template>

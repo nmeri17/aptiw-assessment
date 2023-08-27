@@ -18,4 +18,11 @@ export default defineConfig({
             },
         }),
     ],
+    resolve: {
+    alias: [
+      /*{ find: '@', replacement: 'node_modules' }*//*,
+      { find: 'pages', replacement: '/resources/js/pages' },
+      { find: 'components', replacement: '/resources/js/components' },*/
+    ]
+  }
 });
