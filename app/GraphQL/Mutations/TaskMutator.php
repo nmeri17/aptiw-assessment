@@ -12,6 +12,8 @@ final class TaskMutator
      */
     public function create ($_, array $args)
     {
+        $args["status"] = "Not Started";
+        
         return auth()->user()->tasks()->create($args);
     }
 }

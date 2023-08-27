@@ -41,7 +41,7 @@ type Mutation {
   ): User @create
 
   "Exclamation marks in arguments make the value in payload required. resolved from path app/graphql/mutations. @middleware(checks: [\"auth:api\"])"
-  createTasks(title: String!, description: String!, due_date: DateTime!, category_id: Int!, status: String!): Tasks @field(resolver: "TasksMutator@create")
+  createTasks(title: String!, description: String!, due_date: DateTime!, category_id: Int!): Tasks @field(resolver: "TasksMutator@create")
 
   updateTask(id: ID!, title: String, description: String, due_date: DateTime, category_id: Int, status: String): Tasks @update
 
