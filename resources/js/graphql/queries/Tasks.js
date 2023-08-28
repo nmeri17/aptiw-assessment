@@ -1,4 +1,7 @@
-query Tasks {
+import gql from "graphql-tag";
+
+export const PAGINATE_TASKS_QUERY = gql`
+{
   tasks {
     data {
 	    id
@@ -12,4 +15,4 @@ query Tasks {
 	    }
 	}
   }
-}
+}`
