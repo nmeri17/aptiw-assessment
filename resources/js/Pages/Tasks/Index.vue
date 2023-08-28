@@ -89,57 +89,59 @@ const categories = [];
 
 														      <!-- Result -->
 														      <div v-else-if="data" class="result apollo">
-																		<tr
-																				v-for="task in data"
-																				:key="task.id"
-																				class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-																		>
-																				<th
-																						scope="row"
-																						class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
-																				>
-																						{{ task.id }}
-																				</th>
-																				<th
-																						scope="row"
-																						class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
-																				>
-																						{{ task.title }}
-																				</th>
-																				<td class="px-6 py-4">
-																						{{ task.status }}
-																				</td>
-																				<td class="px-6 py-4">
-																						{{ task.description }}
-																				</td>
-																				<td class="px-6 py-4">
-																						{{ task.due_date }}
-																				</td>
-																				<td class="px-6 py-4">
-																						{{ task.category.name }}
-																				</td>
+																					<tr
+																							v-for="task in data"
+																							:key="task.id"
+																							class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+																					>
+																							<th
+																									scope="row"
+																									class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+																							>
+																									{{ task.id }}
+																							</th>
+																							<th
+																									scope="row"
+																									class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"
+																							>
+																									{{ task.title }}
+																							</th>
+																							<td class="px-6 py-4">
+																									{{ task.status }}
+																							</td>
+																							<td class="px-6 py-4">
+																									{{ task.description }}
+																							</td>
+																							<td class="px-6 py-4">
+																									{{ task.due_date }}
+																							</td>
+																							<td class="px-6 py-4">
+																									{{ task.category.name }}
+																							</td>
 
 
-																				<td class="px-6 py-4">
-																						<Link
-																								:href="
-																										route(
-																												'tasks.edit',
-																												task.id
-																										)
-																								"
-																							 class="px-4 py-2 text-white bg-blue-600 rounded-lg" >Edit</Link
-																						>
-																				</td>
-																				<td class="px-6 py-4">
-																						<PrimaryButton
-																								class="bg-red-700"
-																								@click="destroy(task.id)"
-																						>
-																								Delete
-																						</PrimaryButton>
-																				</td>
-																		</tr></div>
+																							<td class="px-6 py-4">
+																									<Link
+																											:href="
+																													route(
+																															'tasks.edit',
+																															task.id
+																													)
+																											"
+																										 class="px-4 py-2 text-white bg-blue-600 rounded-lg" >Edit</Link
+																									>
+																							</td>
+																							<td class="px-6 py-4">
+																									<PrimaryButton
+																											class="bg-red-700"
+																											@click="destroy(task.id)"
+																									>
+																											Delete
+																									</PrimaryButton>
+																							</td>
+																					</tr>
+																				</div>
+																			</template>
 																	</ApolloQuery>
 																</tbody>
 														</table>
