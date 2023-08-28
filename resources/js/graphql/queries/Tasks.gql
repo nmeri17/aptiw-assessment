@@ -1,0 +1,15 @@
+query Tasks {
+  tasks {
+    data {
+	    id
+	    title
+	    description
+	    due_date
+	    status
+	    category {
+	    	id
+	    	name
+	    }
+	}
+  }
+}

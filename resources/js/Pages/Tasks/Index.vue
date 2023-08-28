@@ -3,12 +3,6 @@ import BreezeAuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 
-const props = defineProps({
-		tasks: {
-				type: Object,
-				default: () => ({}),
-		}
-});
 const form = useForm({});
 
 function destroy(id) {
@@ -67,10 +61,10 @@ const categories = [];
 																						Status
 																				</th>
 																				<th scope="col" class="px-6 py-3">
-																						description
+																						Description
 																				</th>
 																				<th scope="col" class="px-6 py-3">
-																						due_date
+																						Due date
 																				</th>
 																				<th scope="col" class="px-6 py-3">
 																						Category
@@ -84,8 +78,19 @@ const categories = [];
 																		</tr>
 																</thead>
 																<tbody>
+
+																	<ApolloQuery :query="require('../../graphql/queries/Tasks.gql')">
+														    <template v-slot="{ result: { loading, error, data } }">
+														      <!-- Loading -->
+														      <div v-if="loading" class="loading apollo">Loading...</div>
+
+														      <!-- Error -->
+														      <div v-else-if="error" class="error apollo">An error occurred</div>
+
+														      <!-- Result -->
+														      <div v-else-if="data" class="result apollo">
 																		<tr
-																				v-for="task in tasks"
+																				v-for="task in data"
 																				:key="task.id"
 																				class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
 																		>
@@ -134,7 +139,8 @@ const categories = [];
 																								Delete
 																						</PrimaryButton>
 																				</td>
-																		</tr>
+																		</tr></div>
+																	</ApolloQuery>
 																</tbody>
 														</table>
 												</div>
